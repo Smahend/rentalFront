@@ -1,23 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import RentForm from "./components/RentForm";
+
 
 function App() {
+  const [vehData,setVehData] = useState()
+  useEffect(()=>{
+         let data= axios.get('/vehicle') 
+         .then(
+          setVehData(data)
+         )
+  },[])
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1 className='bg-danger text-white text-center p-2 m-1'>Vehicle Rent App</h1>
+      <div className='card'>
+          <img className='card-img-top' src/>
+          <div className='card-body'>
+             {
+                vehData.map((daata)=>
+                {
+                    return (
+                      <>
+                      <h5 className="card-title">{daata.type}</h5>
+                      <p className="card-text">{daata.model}</p>
+                      <a href="#" className="btn btn-primary">Go</a>
+                      </>
+                    )
+                     
+                }
+                )
+             }
+          </div>
+      </div>
+      <RentForm />
     </div>
   );
 }
